@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme {
+  --font-sans: 'shu hei', sans-serif;
+  --font-mono: 'shu hei', monospace;
+}
