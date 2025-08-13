@@ -1,7 +1,7 @@
 <template>
   <div>
     <iframe
-      :src="`https://www.bilibili.com/blackboard/live/live-mobile-playerV3.html?roomId=${roomId}&danmaku=0`" frameborder="0"
+      :src="`https://www.bilibili.com/blackboard/live/live-activity-player.html?cid=${roomId}&danmaku=0`" frameborder="0"
       width="736" height="414"
       class="w-full"
     />

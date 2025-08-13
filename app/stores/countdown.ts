@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useCountdownStore = defineStore('user', () => {
+export const useCountdownStore = defineStore('countdown', () => {
   const startTime = ref<number | null>(null);
   return {
     startTime,
