@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import type { BreadcrumbItem, FormSubmitEvent } from '@nuxt/ui';
+import type { FormSubmitEvent } from '@nuxt/ui';
 import * as z from 'zod';
 
 const { $trpc } = useNuxtApp();
