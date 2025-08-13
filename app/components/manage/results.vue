@@ -55,7 +55,7 @@ const queryClient = useQueryClient();
 
 async function onDelete(result: any) {
   await $trpc.result.delete.mutate({ id: result.id });
-  await queryClient.invalidateQueries({ queryKey: ['level.getAll'] });
+  await queryClient.invalidateQueries({ queryKey: ['result.getAll'] });
   toast.add({ title: '已删除', description: `成绩 ${result.id} 已删除`, color: 'success' });
 }
 </script>
