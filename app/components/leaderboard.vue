@@ -5,7 +5,7 @@
     </div>
     <div v-for="player in leaderboard?.leaderboard" :key="player.player.id" class="flex items-center justify-between px-5 py-2">
       <div class="flex items-center gap-2">
-        <NuxtImg :src="player.player.avatar" class="rounded-full h-8 w-8" />
+        <img :src="player.player.avatar" class="rounded-full h-8 w-8">
         <span class="text-[24px] font-semibold">{{ player.player.name }}</span>
       </div>
       <span class="text-[22px] font-semibold font-mono">
