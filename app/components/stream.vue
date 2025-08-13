@@ -6,7 +6,8 @@
       class="w-full"
     />
     <div class="h-[95px] text-white bg-zinc-800/70 flex items-center justify-between px-5">
-      <UAvatar size="3xl" :src="avatar" />
+      <NuxtImg :src="avatar" class="rounded-full h-12 w-12" />
+      <!-- <UAvatar size="3xl" :src="avatar" /> -->
       <span class="text-[40px] font-semibold">
         {{ playerName }}
       </span>

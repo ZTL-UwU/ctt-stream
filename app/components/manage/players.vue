@@ -31,7 +31,7 @@
         <template #header>
           <div class="flex items-center gap-2 justify-between w-full">
             <div class="flex items-center gap-2">
-              <UAvatar :src="player.avatar" />
+              <NuxtImg :src="player.avatar" class="rounded-full h-8 w-8" />
               <span class="text-lg font-semibold">
                 {{ player.name }}
               </span>
