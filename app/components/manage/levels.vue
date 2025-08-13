@@ -28,11 +28,11 @@
             </span>
             <div class="flex items-center gap-2">
               <UModal :title="`修改关卡：${level.name}`">
-                <UButton size="sm" icon="lucide:edit" variant="subtle" color="neutral" />
+                <UButton size="sm" icon="lucide:edit" variant="subtle" color="neutral" @click="prepareEdit(level)" />
                 <template #body>
-                  <UForm :state="level" class="space-y-4" @submit="() => onUpdate(level)">
+                  <UForm :state="tmpLevel" class="space-y-4" @submit="() => onUpdate(tmpLevel)">
                     <UFormField label="名称" name="name">
-                      <UInput v-model="level.name" />
+                      <UInput v-model="tmpLevel.name" />
                     </UFormField>
                     <div class="flex gap-2 justify-end">
                       <UButton type="submit" color="primary">
@@ -88,6 +88,11 @@ type Schema = z.output<typeof schema>;
 const state = reactive<Partial<Schema>>({
   name: undefined,
 });
+
+const tmpLevel = ref<any>({});
+function prepareEdit(levelObj: any) {
+  tmpLevel.value = { ...levelObj };
+}
 
 const toast = useToast();
 const queryClient = useQueryClient();

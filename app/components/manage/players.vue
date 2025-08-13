@@ -38,17 +38,17 @@
             </div>
             <div class="flex items-center gap-2">
               <UModal :title="`修改玩家：${player.name}`">
-                <UButton size="sm" icon="lucide:edit" variant="subtle" color="neutral" />
+                <UButton size="sm" icon="lucide:edit" variant="subtle" color="neutral" @click="prepareEdit(player)" />
                 <template #body>
-                  <UForm :state="player" class="space-y-4" @submit="() => onUpdate(player)">
+                  <UForm :state="tmpPlayer" class="space-y-4" @submit="() => onUpdate(tmpPlayer)">
                     <UFormField label="名称" name="name">
-                      <UInput v-model="player.name" />
+                      <UInput v-model="tmpPlayer.name" />
                     </UFormField>
                     <UFormField label="直播房间号" name="streamId">
-                      <UInput v-model="player.streamId" />
+                      <UInput v-model="tmpPlayer.streamId" />
                     </UFormField>
                     <UFormField label="头像 URL" name="avatar">
-                      <UInput v-model="player.avatar" />
+                      <UInput v-model="tmpPlayer.avatar" />
                     </UFormField>
                     <div class="flex gap-2 justify-end">
                       <UButton type="submit" color="primary">
@@ -109,6 +109,11 @@ const state = reactive<Partial<Schema>>({
   streamId: undefined,
   avatar: undefined,
 });
+
+const tmpPlayer = ref<any>({});
+function prepareEdit(playerObj: any) {
+  tmpPlayer.value = { ...playerObj };
+}
 
 const toast = useToast();
 const queryClient = useQueryClient();

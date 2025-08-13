@@ -33,18 +33,18 @@
               <UModal :title="`修改活动：${event.name}`">
                 <UButton size="sm" icon="lucide:edit" variant="subtle" color="neutral" @click="prepareEdit(event)" />
                 <template #body>
-                  <UForm :state="event" class="space-y-4" @submit="() => onUpdate(event)">
+                  <UForm :state="tmpEvent" class="space-y-4" @submit="() => onUpdate(tmpEvent)">
                     <UFormField>
-                      <USwitch v-model="event.active" label="启用" />
+                      <USwitch v-model="tmpEvent.active" label="启用" />
                     </UFormField>
                     <UFormField label="名称" name="name">
-                      <UInput v-model="event.name" class="w-full" />
+                      <UInput v-model="tmpEvent.name" class="w-full" />
                     </UFormField>
                     <UFormField label="关卡" name="levels">
-                      <USelect v-model="(event as any).levelIds" :items="levelOptions" multiple placeholder="选择关卡" class="w-full" />
+                      <USelect v-model="(tmpEvent as any).levelIds" :items="levelOptions" multiple placeholder="选择关卡" class="w-full" />
                     </UFormField>
                     <UFormField label="玩家" name="players">
-                      <USelect v-model="(event as any).playerIds" :items="playerOptions" multiple placeholder="选择玩家" class="w-full" />
+                      <USelect v-model="(tmpEvent as any).playerIds" :items="playerOptions" multiple placeholder="选择玩家" class="w-full" />
                     </UFormField>
                     <div class="flex gap-2 justify-end">
                       <UButton type="submit" color="primary">
@@ -157,12 +157,14 @@ async function onSubmit(e: FormSubmitEvent<Schema>) {
   toast.add({ title: '成功', description: '活动已创建', color: 'success' });
 }
 
+const tmpEvent = ref<any>({});
 function prepareEdit(eventObj: any) {
-  if (!eventObj.levelIds) {
-    eventObj.levelIds = (eventObj.levels || []).map((l: any) => l.levelId);
+  tmpEvent.value = { ...eventObj };
+  if (!tmpEvent.value.levelIds) {
+    tmpEvent.value.levelIds = (tmpEvent.value.levels || []).map((l: any) => l.levelId);
   }
-  if (!eventObj.playerIds) {
-    eventObj.playerIds = (eventObj.players || []).map((p: any) => p.playerId);
+  if (!tmpEvent.value.playerIds) {
+    tmpEvent.value.playerIds = (tmpEvent.value.players || []).map((p: any) => p.playerId);
   }
 }
 
