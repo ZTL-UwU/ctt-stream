@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold flex flex-col text-white text-[50px] bg-zinc-800/70 text-center pb-2">
+  <div class="font-bold flex flex-col text-white text-[50px] bg-zinc-800/70 text-center">
     <div class="text-[25px] font-bold bg-zinc-800/70 p-3 flex justify-between items-center">
       <div class="flex-1" />
       <span class="justify-center flex-1">
