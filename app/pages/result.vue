@@ -80,7 +80,7 @@ const schema = z.object({
   eventId: z.number(),
   playerId: z.number(),
   levelId: z.number(),
-  time: z.string(),
+  time: z.string().trim().regex(/^\d+:[0-5]\d\.\d{3}$/u, { message: '时间格式应为 M:SS.mmm（如 0:57.239）' }),
 });
 
 interface FormState {
@@ -127,16 +127,22 @@ function resetForm() {
   form.time = undefined;
 }
 
+const toast = useToast();
 const submitting = ref(false);
 async function onSubmit() {
   submitting.value = true;
   try {
     const parsed = schema.parse(form);
+    const ms = celesteTimeToMs(parsed.time);
+    if (ms % 17 !== 0) {
+      toast.add({ title: '错误', description: '时间不正确', color: 'error' });
+      return;
+    }
     await $trpc.result.create.mutate({
       eventId: parsed.eventId,
       playerId: parsed.playerId,
       levelId: parsed.levelId,
-      time: celesteTimeToMs(parsed.time),
+      time: ms,
     });
     form.playerId = undefined;
     form.levelId = undefined;
