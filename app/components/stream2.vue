@@ -2,7 +2,7 @@
   <div>
     <iframe
       :src="`https://www.bilibili.com/blackboard/live/live-activity-player.html?cid=${roomId}&danmaku=0&logo=0`" frameborder="0"
-      width="736" height="414"
+      width="930" height="523.125"
       class="w-full"
     />
     <div class="h-[95px] text-white bg-zinc-800/70 flex items-center justify-between px-5">

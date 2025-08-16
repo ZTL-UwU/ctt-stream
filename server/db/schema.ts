@@ -18,6 +18,7 @@ export const events = pgTable('events', {
 
 export const levels = pgTable('levels', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  avatar: varchar({ length: 255 }),
   name: varchar({ length: 255 }).notNull(),
   createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
 });

@@ -14,7 +14,11 @@ export const appRouter = router({
   leaderboard: publicProcedure.query(async () => {
     const activeEvent = await db.query.events.findFirst({
       with: {
-        levels: true,
+        levels: {
+          with: {
+            level: true,
+          },
+        },
         players: {
           with: {
             player: {
@@ -37,6 +41,8 @@ export const appRouter = router({
       const player = pRel.player;
       const bestByLevel = new Map<number, { time: number; levelName?: string }>();
       for (const r of player.results) {
+        if (r.eventId !== activeEvent.id)
+          continue;
         if (!r.levelId)
           continue;
         const existing = bestByLevel.get(r.levelId);
@@ -53,7 +59,7 @@ export const appRouter = router({
       return b.bestTimes.length - a.bestTimes.length;
     });
 
-    return { leaderboard, levelAmount: activeEvent.levels.length };
+    return { leaderboard, levelAmount: activeEvent.levels.length, levels: activeEvent.levels };
   }),
 });
 

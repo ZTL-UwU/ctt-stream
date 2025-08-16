@@ -11,6 +11,9 @@
             <UFormField label="名称" name="name">
               <UInput v-model="state.name" />
             </UFormField>
+            <UFormField label="图标" name="avatar">
+              <UInput v-model="state.avatar" />
+            </UFormField>
             <UButton type="submit">
               提交
             </UButton>
@@ -23,9 +26,12 @@
       <UCard v-for="level in data" :key="level.id">
         <template #header>
           <div class="flex items-center gap-2 justify-between w-full">
-            <span class="text-lg font-semibold">
-              {{ level.name }}
-            </span>
+            <div class="flex items-center gap-2">
+              <img v-if="level.avatar" :src="level.avatar" class="rounded-full h-8 w-8">
+              <span class="text-lg font-semibold">
+                {{ level.name }}
+              </span>
+            </div>
             <div class="flex items-center gap-2">
               <UModal :title="`修改关卡：${level.name}`">
                 <UButton size="sm" icon="lucide:edit" variant="subtle" color="neutral" @click="prepareEdit(level)" />
@@ -33,6 +39,9 @@
                   <UForm :state="tmpLevel" class="space-y-4" @submit="() => onUpdate(tmpLevel)">
                     <UFormField label="名称" name="name">
                       <UInput v-model="tmpLevel.name" />
+                    </UFormField>
+                    <UFormField label="图标" name="avatar">
+                      <UInput v-model="tmpLevel.avatar" />
                     </UFormField>
                     <div class="flex gap-2 justify-end">
                       <UButton type="submit" color="primary">
@@ -81,6 +90,7 @@ await suspense();
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
+  avatar: z.string().url('Avatar must be a valid URL'),
 });
 
 type Schema = z.output<typeof schema>;
@@ -99,6 +109,7 @@ const queryClient = useQueryClient();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   await $trpc.level.create.mutate({
     name: event.data.name,
+    avatar: event.data.avatar,
   });
   await queryClient.invalidateQueries({ queryKey: ['level.getAll'] });
   state.name = undefined;
@@ -109,6 +120,7 @@ async function onUpdate(level: any) {
   await $trpc.level.update.mutate({
     id: level.id,
     name: level.name,
+    avatar: level.avatar,
   });
   await queryClient.invalidateQueries({ queryKey: ['level.getAll'] });
   toast.add({ title: '已保存', description: '关卡已更新', color: 'success' });

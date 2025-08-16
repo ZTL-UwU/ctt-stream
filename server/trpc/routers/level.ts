@@ -17,6 +17,7 @@ export const levelRouter = router({
   create: publicProcedure
     .input(z.object({
       name: z.string(),
+      avatar: z.string(),
     }))
     .mutation(async ({ input }) => {
       await db.insert(levels)
@@ -27,6 +28,7 @@ export const levelRouter = router({
     .input(z.object({
       id: z.number(),
       name: z.string().optional(),
+      avatar: z.string().optional(),
     }))
     .mutation(async ({ input }) => {
       const { id, ...rest } = input;
